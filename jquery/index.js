@@ -14,4 +14,15 @@ $(document).ready(function () {
     // Update the count on the page
     updateCount();
   });
+
+  //toggle the visibility of the element with id "something"
+  $("#show").click(() => {
+    $("#something").toggle();
+
+    if ($("#something").is(":visible")) {
+      $("#show").text("Hide Something");
+    } else {
+      $("#show").text("Show Something");
+    }
+  });
 });
