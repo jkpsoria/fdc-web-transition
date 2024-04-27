@@ -47,7 +47,6 @@ $(document).ready(function () {
   // Select all elements with attribute "data-toggle" and remove the attribute
   $("[data-toggle]").removeAttr("data-toggle");
 
-
   //event handling
   // $("div").bind('click', function () {
   //   // jQuery code goes here
@@ -59,12 +58,10 @@ $(document).ready(function () {
   //   alert("hey2")
   // });
 
-
   $("div").dblclick(function () {
     // jQuery code goes here
-    alert("hey2")
+    alert("hey2");
   });
-
 
   // $("#2ndDiv").mouseenter(function () {
   //   // jQuery code goes here
@@ -80,14 +77,65 @@ $(document).ready(function () {
   // }
   // ;
 
+  // $("#2ndDiv").mouseenter(function () {
+  //   $(this).css("background-color", "blue"); // Change background color on mouseenter
+  // });
+  // $("#2ndDiv").mouseleave(function () {
+  //   $(this).css("background-color", "red"); // Change background color on mouseleave
+  // });
 
+  //hover
+  $("#2ndDiv").hover(
+    function () {
+      $(this).css("background-color", "blue");
+    },
+    function () {
+      $(this).css("background-color", "red");
+    }
+  );
 
-  $("#2ndDiv").mouseenter(function () {
-    $(this).css("background-color", "blue"); // Change background color on mouseenter
+  //event object
+  $("#3rdDiv").mousedown(function (e) {
+    console.log(e);
   });
-  $("#2ndDiv").mouseleave(function () {
-    $(this).css("background-color", "red"); // Change background color on mouseleave
+
+  //get attribute
+  $("#title").click(function () {
+    alert("The title is: " + $("#home").attr("title"));
   });
 
+  //get data-attribute
+  $("#author").click(function () {
+    alert(
+      `The author is: ${$("#authorData").data("author-name")},  year ${$(
+        "#authorData"
+      ).data("year")}`
+    );
+  });
 
+  //set attribute
+  $("#title").click(function () {
+    $("#home").attr("title", "Home Page");
+    alert("The NEW title is: " + $("#home").attr("title"));
+  });
+
+  //set custom-attribute
+
+  $("#author").click(function () {
+    $("#authorData").data("author-name", "John Doe");
+    alert(
+      `The NEW author is: ${$("#authorData").data("author-name")},  year ${$(
+        "#authorData"
+      ).data("year")}`
+    );
+  });
+
+  //ajax json
+  $.get("https://jsonplaceholder.typicode.com/users", function (data) {
+    const users = $.map(data, function (user, index) {
+      return `<li>${user.name} ${index}</li>`;
+    });
+
+    $("#data").append(users);
+  });
 });
