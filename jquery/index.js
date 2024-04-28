@@ -26,7 +26,7 @@ $(document).ready(function () {
     }
   });
 
-  //selectors
+  // selectors
   // Select all elements with class "item" and change their background color to red
   $(".counter").css("background-color", "red");
 
@@ -39,7 +39,7 @@ $(document).ready(function () {
   });
 
   // Select all input elements and disable them
-  $("input").prop("disabled", true);
+  //$("input").prop("disabled", true)
 
   // Select the first paragraph element and change its font size to 20px
   $("p:first").css("font-size", "20px");
@@ -130,12 +130,47 @@ $(document).ready(function () {
     );
   });
 
-  //ajax json
-  $.get("https://jsonplaceholder.typicode.com/users", function (data) {
+  //ajax json get method
+  //map order of parameters: element, index
+  $.get("https://jsonplaceholder.typicode.com/users", (data) => {
     const users = $.map(data, function (user, index) {
       return `<li>${user.name} ${index}</li>`;
     });
 
     $("#data").append(users);
+
+    console.log(users);
+  });
+
+  //filter order of parameters: index, element
+  $.get("https://jsonplaceholder.typicode.com/users", (data) => {
+    var filteredUsers = $(data)
+      .filter(function (index, user) {
+        return user.name.includes("L"); // Filter condition, change as needed
+      })
+      .map(function (index, user) {
+        return `<li>${user.name}</li>`;
+      })
+      .get(); // Convert jQuery object back to an array
+
+    $("#data").append(filteredUsers);
+  });
+
+  //ajax json post method
+
+  $("#addUser").submit((e) => {
+    e.preventDefault();
+    const name = $("#nameInput").val();
+
+    $.post(
+      "https://jsonplaceholder.typicode.com/users",
+      { name: name },
+      (data) => {
+        $("#data").append(`<li>${data.name}</li>`);
+      }
+    );
+
+    $("#nameInput").val("");
+    console.log(data);
   });
 });
